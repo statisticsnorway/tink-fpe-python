@@ -7,11 +7,12 @@ handle = keyset_handle.KeysetHandle(fpe_key_templates.FPE_FF31_256_F_ALPHANUMERI
 """
 
 from tink.proto import tink_pb2
-from tink_fpe import _fpe_ffx_key_manager
-from tink_fpe.proto.fpe_ffx_pb2 import FfxMode, FpeFfxKeyFormat
 
-# TODO: Define in CharacterGroup constant elsewhere
-_ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+from tink_fpe import _fpe_ffx_key_manager
+from tink_fpe._fpe import CharacterGroup
+from tink_fpe.proto.fpe_ffx_pb2 import FfxMode
+from tink_fpe.proto.fpe_ffx_pb2 import FpeFfxKeyFormat
+
 
 def _create_fpe_ffx_key_template(key_size: int, mode: FfxMode.ValueType, alphabet: str) -> tink_pb2.KeyTemplate:
     """Creates an FPE FFX KeyTemplate, and fills in its values."""
@@ -28,19 +29,14 @@ def _create_fpe_ffx_key_template(key_size: int, mode: FfxMode.ValueType, alphabe
 
 
 FPE_FF31_256_ALPHANUMERIC = _create_fpe_ffx_key_template(
-    key_size=256,
-    mode=FfxMode.FF31,
-    alphabet=_ALPHANUMERIC
+    key_size=256, mode=FfxMode.FF31, alphabet=CharacterGroup.ALPHANUMERIC
 )
-
 FPE_FF31_192_ALPHANUMERIC = _create_fpe_ffx_key_template(
-    key_size=192,
-    mode=FfxMode.FF31,
-    alphabet=_ALPHANUMERIC
+    key_size=192, mode=FfxMode.FF31, alphabet=CharacterGroup.ALPHANUMERIC
 )
-
 FPE_FF31_128_ALPHANUMERIC = _create_fpe_ffx_key_template(
-    key_size=128,
-    mode=FfxMode.FF31,
-    alphabet=_ALPHANUMERIC
+    key_size=128, mode=FfxMode.FF31, alphabet=CharacterGroup.ALPHANUMERIC
 )
+FPE_FF31_256_DIGITS = _create_fpe_ffx_key_template(key_size=256, mode=FfxMode.FF31, alphabet=CharacterGroup.DIGITS)
+FPE_FF31_192_DIGITS = _create_fpe_ffx_key_template(key_size=192, mode=FfxMode.FF31, alphabet=CharacterGroup.DIGITS)
+FPE_FF31_128_DIGITS = _create_fpe_ffx_key_template(key_size=128, mode=FfxMode.FF31, alphabet=CharacterGroup.DIGITS)

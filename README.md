@@ -1,4 +1,4 @@
-# Tink FPE
+# Tink FPE Python
 
 [![PyPI](https://img.shields.io/pypi/v/tink-fpe.svg)][pypi_]
 [![Status](https://img.shields.io/pypi/status/tink-fpe.svg)][status]
@@ -18,7 +18,6 @@
 [codecov]: https://app.codecov.io/gh/statisticsnorway/tink-fpe-python
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
-
 
 Format-Preserving Encryption (FPE) is a type of encryption that encrypts data in a way that preserves the format of the original plaintext. This means that after encryption, the encrypted data retains the same format as the original plaintext, such as a specific length or character set.
 
@@ -78,10 +77,10 @@ texts that contain non-alphabet characters. The approach to use can be expressed
 
 The following _stragies_ are supported:
 
-* `FAIL` - Raise an error and bail out if encountering a non-alphabet character. **(this is the default)**
-* `SKIP` - Ignore non-alphabet characters, leaving them unencrypted (nested into the ciphertext).
-* `DELETE` - Remove all characters that are not part of the alphabet prior to processing. _Warning: Using this strategy implies that the length of the plaintext and ciphertext may differ. 
-* `REDACT` - Replace non-alphabet characters with an alphabet-compliant character prior to processing. _Warning: Using this strategy means that decryption may not result in the exact same plaintext being restored._
+- `FAIL` - Raise an error and bail out if encountering a non-alphabet character. **(this is the default)**
+- `SKIP` - Ignore non-alphabet characters, leaving them unencrypted (nested into the ciphertext).
+- `DELETE` - Remove all characters that are not part of the alphabet prior to processing. \_Warning: Using this strategy implies that the length of the plaintext and ciphertext may differ.
+- `REDACT` - Replace non-alphabet characters with an alphabet-compliant character prior to processing. _Warning: Using this strategy means that decryption may not result in the exact same plaintext being restored._
 
 ```python
 from tink_fpe import FpeParams, UnknownCharacterStrategy
@@ -89,7 +88,8 @@ from tink_fpe import FpeParams, UnknownCharacterStrategy
 # The following will raise an Error
 ciphertext = fpe.encrypt(b'Ken sent me...', FpeParams(strategy=UnknownCharacterStrategy.FAIL))
 
-
+# Skipping non-supported characters might reveal too much of the plaintext, but it is currently the only
+# approach that will handle any plaintext without either failing or irreversibly transforming the plaintext.
 params = FpeParams(strategy=UnknownCharacterStrategy.SKIP)
 fpe.encrypt(b'Ken sent me...', params) #-> UEj l1Ns sj...
 fpe.decrypt(ciphertext, params) #-> Ken sent me...

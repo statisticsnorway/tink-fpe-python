@@ -1,0 +1,1 @@
+"""Tink FPE Python Protobuf."""

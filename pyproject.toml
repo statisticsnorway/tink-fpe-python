@@ -57,7 +57,8 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["tink_fpe", "tests"]
+source = ["tink_fpe"]
+omit = ["*/proto/*"]
 
 [tool.coverage.report]
 show_missing = true
@@ -65,9 +66,6 @@ fail_under = 90
 
 [tool.black]
 line-length = 120
-#extend-exclude = "(_pb2.py$|_pb2_grpc.py$)"
-# We don't care about line length for generated code
-#line-length = 10000
 
 [tool.isort]
 profile = "black"

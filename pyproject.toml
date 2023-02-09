@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tink-fpe"
-version = "0.0.1"
+version = "0.0.1-alpha"
 description = "Format-Preserving Encryption support for Google Tink"
 authors = ["Statistics Norway <stat-dev@ssb.no>"]
 license = "MIT"
@@ -16,7 +16,7 @@ classifiers = [
 Changelog = "https://github.com/statisticsnorway/tink-fpe-python/releases"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 tink = { url = "https://test-files.pythonhosted.org/packages/2e/db/6de9eb21086c358166c6e301a410fa956527f3a93b762056284161aa0533/tink-1.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" }
 ff3 = "^1.0.1"
 types-protobuf = "^3.20.4.6"

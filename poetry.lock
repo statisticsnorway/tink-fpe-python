@@ -880,22 +880,6 @@ files = [
 ]
 
 [[package]]
-name = "mypy-protobuf"
-version = "3.3.0"
-description = "Generate mypy stub files from protobuf specs"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "mypy-protobuf-3.3.0.tar.gz", hash = "sha256:24f3b0aecb06656e983f58e07c732a90577b9d7af3e1066fc2b663bbf0370248"},
-    {file = "mypy_protobuf-3.3.0-py3-none-any.whl", hash = "sha256:15604f6943b16c05db646903261e3b3e775cf7f7990b7c37b03d043a907b650d"},
-]
-
-[package.dependencies]
-protobuf = ">=3.19.4"
-types-protobuf = ">=3.19.12"
-
-[[package]]
 name = "myst-parser"
 version = "0.18.1"
 description = "An extended commonmark compliant parser, with bridges to docutils & sphinx."
@@ -1787,18 +1771,6 @@ doc = ["sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
 test = ["mypy", "pytest", "typing-extensions"]
 
 [[package]]
-name = "types-protobuf"
-version = "3.20.4.6"
-description = "Typing stubs for protobuf"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "types-protobuf-3.20.4.6.tar.gz", hash = "sha256:ba27443c592bbec1629dd69494a24c84461c63f0d3b7d648ce258aaae9680965"},
-    {file = "types_protobuf-3.20.4.6-py3-none-any.whl", hash = "sha256:ab2d315ba82246b83d28f8797c98dc0fe1dd5cfd187909e56faf87239aedaae3"},
-]
-
-[[package]]
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -1881,4 +1853,4 @@ tests-strict = ["codecov (==2.0.15)", "pytest (==4.6.0)", "pytest (==4.6.0)", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "6f4664ffbb8d1dc113e9f8f136c2d6b405dbbe30c68045b9d2f53626f94a2893"
+content-hash = "b4cfbe7468d43ba4c56e3c96c934b5120d30f4de4c4df98b17ee4994c03e960d"

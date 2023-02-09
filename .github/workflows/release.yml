@@ -31,9 +31,6 @@ jobs:
           pip install --constraint=.github/workflows/constraints.txt poetry
           poetry --version
 
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1.1.2
-
       - name: Check if there is a parent commit
         id: check-parent-commit
         run: |

@@ -1740,7 +1740,7 @@ protobuf = "4.21.9"
 [package.source]
 type = "git"
 url = "https://github.com/google/tink"
-reference = "HEAD"
+reference = "0d9af8f"
 resolved_reference = "0d9af8f93fde9705711ff662d1b393770bb666ac"
 subdirectory = "python"
 [[package]]
@@ -1962,4 +1962,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "435831babe2edb152c2ac5e5618c644f69858cead9319b860435978338245232"
+content-hash = "96a947ef636788744445a7c55f7ca141bad1b8434b8cb6811db17e7921d81fc8"

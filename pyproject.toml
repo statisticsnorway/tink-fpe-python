@@ -19,6 +19,7 @@ Changelog = "https://github.com/statisticsnorway/tink-fpe-python/releases"
 python = "^3.10"
 tink = { url = "https://test-files.pythonhosted.org/packages/2e/db/6de9eb21086c358166c6e301a410fa956527f3a93b762056284161aa0533/tink-1.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" }
 ff3 = "^1.0.1"
+types-protobuf = "^3.20.4.6"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=21.10b0"
@@ -32,6 +33,7 @@ flake8-rst-docstrings = ">=0.2.5"
 furo = ">=2021.11.12"
 isort = ">=5.10.1"
 mypy = ">=0.930"
+mypy-protobuf = "^3.3.0"
 myst-parser = {version = ">=0.16.1"}
 pep8-naming = ">=0.12.1"
 pre-commit = ">=2.16.0"

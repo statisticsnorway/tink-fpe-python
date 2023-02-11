@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tink-fpe"
-version = "0.0.1"
+version = "0.2.0"
 description = "Format-Preserving Encryption support for Google Tink"
 authors = ["Statistics Norway <stat-dev@ssb.no>"]
 license = "MIT"

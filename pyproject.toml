@@ -17,9 +17,10 @@ Changelog = "https://github.com/statisticsnorway/tink-fpe-python/releases"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-tink =  { git = "https://github.com/google/tink", rev="0d9af8f", subdirectory = "python" }
 ff3 = "^1.0.1"
+tink-custom = "^1.7.0"
 types-protobuf = "^4.21.0.4"
+
 
 [tool.poetry.scripts]
 tink-fpe = "tink_fpe.__main__:main" #TODO: Remove

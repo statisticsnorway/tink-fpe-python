@@ -17,7 +17,7 @@ Changelog = "https://github.com/statisticsnorway/tink-fpe-python/releases"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-tink =  { git = "https://github.com/google/tink", rev="0d9af8f", subdirectory = "python" }
+tink-custom = "^1.7.1"
 ff3 = "^1.0.1"
 types-protobuf = "^4.21.0.4"
 

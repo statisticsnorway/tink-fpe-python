@@ -11,6 +11,10 @@ Prerequisites:
 
   Download the root certificates here:
   https://pki.google.com/roots.pem
+
+  Ref:
+  - https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigtable/examples/README.md#configure-environment
+  - https://github.com/google/tink/issues/399
 """
 import typing as t
 from typing import cast
@@ -46,8 +50,7 @@ def static_keysets() -> t.Dict[str, str]:
 def ff31_256_alphanumeric(register_tink_fpe: None, static_keysets: t.Dict[str, str]) -> Fpe:
     gcp_client = gcpkms.GcpKmsClient(kek_uri, gcp_credentials)
     kms_aead = gcp_client.get_aead(kek_uri)
-    reader = JsonKeysetReader(serialized_keyset=static_keysets["WRAPPED_FPE_FF31_256_ALPHANUMERIC"])
-    keyset_handle = read_keyset_handle(keyset_reader=reader, master_key_aead=kms_aead)
+    keyset_handle = read_keyset_handle(keyset_reader=JsonKeysetReader(serialized_keyset=static_keysets["WRAPPED_FPE_FF31_256_ALPHANUMERIC"]), master_key_aead=kms_aead)
     return cast(Fpe, keyset_handle.primitive(Fpe))
 
 

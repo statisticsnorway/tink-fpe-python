@@ -146,6 +146,53 @@ keyset_handle = cleartext_keyset_handle.read(JsonKeysetReader(keyset_json))
 fpe = keyset_handle.primitive(tink_fpe.Fpe)
 ```
 
+### Using key material protected by Google Cloud KMS
+
+```python
+import json
+
+from tink import JsonKeysetReader
+from tink import read_keyset_handle
+from tink.integration import gcpkms
+
+import tink_fpe
+
+
+# Define uri to key encryption key and path to GCP credentials
+kek_uri = "gcp-kms://projects/<project-id>/locations/europe-north1/keyRings/my-keyring/cryptoKeys/my-kek"
+gcp_credentials = "path/to/sa-key.json"
+
+# Register Tink FPE with the Tink runtime
+tink_fpe.register()
+
+# Get hold of a wrapped data encryption key (WDEK)
+keyset_json = json.dumps({
+    "encryptedKeyset": "CiQAp91NBsClBYjw4AS9sOdB65peMwlzY4AiOzyMe+b+dFjSBuIS2QEAZ30rtRcDkuvtUgeENQCt29Vsalf+FtaNZc8wpOXKb3sD2c8hTXKaf34iq2QRMaQUBXxG+YSJPV4PvJZMGydZpjowM9K2eAJFZs5JaVxb3BMfUt0miNaORZmczqZhKlXXHbMoQ71GLwfSnf4jJnIRJK4s38ThnxS2ebm4b5T0qno6PWg84TtUw9eIIieqlUFhIqBjCcMugGTsE+xfWIOct22RDEUI3cAboCew5ppjOREAxzbaH8LaUBct5eLN8wtakY3Vv8KxBoT3Hq6fnNSSGOKmkqMVrK0p",
+    "keysetInfo":
+        {
+            "primaryKeyId": 593699223,
+            "keyInfo":
+                [
+                    {
+                        "typeUrl": "type.googleapis.com/ssb.crypto.tink.FpeFfxKey",
+                        "status": "ENABLED",
+                        "keyId": 593699223,
+                        "outputPrefixType": "RAW"
+                    }
+                ]
+        }
+})
+
+# Unwrap key using Google Cloud KMS
+kms_client = gcpkms.GcpKmsClient(kek_uri, gcp_credentials)
+kms_aead = kms_client.get_aead(kek_uri)
+keyset_handle = read_keyset_handle(keyset_reader=JsonKeysetReader(keyset_json), 
+                                   master_key_aead=kms_aead)
+
+# Get the FPE primitive
+fpe = keyset_handle.primitive(tink_fpe.Fpe)
+```
+
 ## Known issues
 
 // TODO: Describe issue about chunking that results in up to last 3 characters not being encrypted.

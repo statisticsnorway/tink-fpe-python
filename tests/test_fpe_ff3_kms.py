@@ -1,3 +1,17 @@
+""" This test demonstrates how KMS wrapped keys can be used with Tink FPE.
+
+Prerequisites:
+- Get hold of an SA key with e.g. Crypto Operator Role for the KEK (Key Encryption Key).
+
+- If the test fails with warnings like "Failed to create secure subchannel for secure
+  name 'cloudkms.googleapis.com'", you can fix this by adding an environment variable that points to the
+  GCP root certificates, like so:
+
+  GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=../private/cert/roots.pem
+
+  Download the root certificates here:
+  https://pki.google.com/roots.pem
+"""
 import typing as t
 from typing import cast
 
@@ -40,9 +54,10 @@ def ff31_256_alphanumeric(register_tink_fpe: None, static_keysets: t.Dict[str, s
 @pytest.mark.parametrize(
     "plaintext, expected_ciphertext",
     [
-        ("Foobar", "6jZemW"),
+        ("Foobar", "m3NRUh"),
     ],
 )
+@pytest.mark.integration_dev(reason="Need to SA credentials in path, thus test can only be run manually")
 def test_ff31_encrypt_decrypt_alphanumeric_with_skip(
         ff31_256_alphanumeric: Fpe, plaintext: str, expected_ciphertext: str
 ) -> None:

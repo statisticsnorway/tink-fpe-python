@@ -65,7 +65,7 @@ def ff31_256_alphanumeric(register_tink_fpe: None, static_keysets: t.Dict[str, s
         ("Foobar", "m3NRUh"),
     ],
 )
-@pytest.mark.integration_dev(reason="Need to SA credentials in path, thus test can only be run manually")
+@pytest.mark.skip(reason="Need to have SA credentials in path, thus test can only be run manually")
 def test_ff31_encrypt_decrypt_alphanumeric_with_skip(
     ff31_256_alphanumeric: Fpe, plaintext: str, expected_ciphertext: str
 ) -> None:

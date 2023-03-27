@@ -196,10 +196,41 @@ keyset_handle = read_keyset_handle(keyset_reader=JsonKeysetReader(json.dumps(key
 fpe = keyset_handle.primitive(tink_fpe.Fpe)
 ```
 
+### Dockerfile
+
+As of this writing (27.03.2023), Tink does not yet provide Python wheels for versions `>1.6.x`. Thus, in order to use Tink FPE, we need to build Tink, which
+involves using bazel and and compiling protobuf sources. The following shows a Dockerfile that
+demonstrates how this can be done. Notice that this is for the `x86` architecture. If you are on another architecture (e.g. `arm`),
+you need to  substitute the bazel and protbuf references to match your architecture.
+
+```dockerfile
+FROM python:3.10-bullseye
+
+RUN apt-get update && apt-get upgrade -y
+
+# Install curl and git
+RUN apt-get install -y curl git
+
+# Install bazel
+RUN curl -L https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-amd64 > /usr/local/bin/bazelisk && chmod +x /usr/local/bin/bazelisk
+
+# Install latest protobuf compiler (note: protobuf-compiler from apt is an older non-compliant version)
+WORKDIR /opt/protobuf
+RUN curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip > protoc.zip
+RUN unzip protoc.zip && chmod +x ./bin/protoc
+RUN ln -s /opt/protobuf/bin/protoc /usr/local/bin/protoc
+
+# Update pip
+RUN pip install --upgrade pip
+
+# ...
+WORKDIR /app
+```
+
 ## Known issues
 
 // TODO: Describe issue about chunking that results in up to last 3 characters not being encrypted.
-// TODO: Describe issue with minimum length of 4 characters
+// TODO: Describe issue with minimum length depending on the alphabet radix (e.g. 4 characters for alphanumeric and 6 for digits)
 
 ## Contributing
 

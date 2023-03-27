@@ -1,4 +1,4 @@
-""" This test demonstrates how KMS wrapped keys can be used with Tink FPE.
+"""This test demonstrates how KMS wrapped keys can be used with Tink FPE.
 
 Prerequisites:
 - Get hold of an SA key with e.g. Crypto Operator Role for the KEK (Key Encryption Key).

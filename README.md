@@ -189,7 +189,7 @@ kek_uri = keyset_json.pop('kekUri')
 # Unwrap key using Google Cloud KMS
 kms_client = gcpkms.GcpKmsClient(kek_uri, gcp_credentials)
 kms_aead = kms_client.get_aead(kek_uri)
-keyset_handle = read_keyset_handle(keyset_reader=JsonKeysetReader(json.dumps(keyset_json)), 
+keyset_handle = read_keyset_handle(keyset_reader=JsonKeysetReader(json.dumps(keyset_json)),
                                    master_key_aead=kms_aead)
 
 # Get the FPE primitive
@@ -198,10 +198,12 @@ fpe = keyset_handle.primitive(tink_fpe.Fpe)
 
 ### Dockerfile
 
-As of this writing (27.03.2023), Tink does not yet provide Python wheels for versions `>1.6.x`. Thus, in order to use Tink FPE, we need to build Tink, which
-involves using bazel and and compiling protobuf sources. The following shows a Dockerfile that
-demonstrates how this can be done. Notice that this is for the `x86` architecture. If you are on another architecture (e.g. `arm`),
-you need to  substitute the bazel and protbuf references to match your architecture.
+As of this writing (27.03.2023), Tink does not yet provide Python wheels for versions `>1.6.x`.
+Thus, in order to use Tink FPE, we need to build Tink, which involves using bazel and and
+compiling protobuf sources. The following shows a Dockerfile that demonstrates how this can
+be done. Notice that this is for the `x86` architecture. If you are on another
+architecture (e.g. `arm`), you need to substitute the bazel and protobuf references to match
+your system architecture.
 
 ```dockerfile
 FROM python:3.10-bullseye

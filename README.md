@@ -146,9 +146,93 @@ keyset_handle = cleartext_keyset_handle.read(JsonKeysetReader(keyset_json))
 fpe = keyset_handle.primitive(tink_fpe.Fpe)
 ```
 
+### Using key material protected by Google Cloud KMS
+
+```python
+import json
+
+from tink import JsonKeysetReader
+from tink import read_keyset_handle
+from tink.integration import gcpkms
+
+import tink_fpe
+
+
+# Define uri to key encryption key and path to GCP credentials
+gcp_credentials = "path/to/sa-key.json"
+
+# Register Tink FPE with the Tink runtime
+tink_fpe.register()
+
+# Get hold of a wrapped data encryption key (WDEK)
+keyset_json = {
+    "kekUri": "gcp-kms://projects/<project-id>/locations/<region>/keyRings/my-keyring/cryptoKeys/my-kek",
+    "encryptedKeyset": "CiQAp91NBsClBYjw4AS9sOdB65peMwlzY4AiOzyMe+b+dFjSBuIS2QEAZ30rtRcDkuvtUgeENQCt29Vsalf+FtaNZc8wpOXKb3sD2c8hTXKaf34iq2QRMaQUBXxG+YSJPV4PvJZMGydZpjowM9K2eAJFZs5JaVxb3BMfUt0miNaORZmczqZhKlXXHbMoQ71GLwfSnf4jJnIRJK4s38ThnxS2ebm4b5T0qno6PWg84TtUw9eIIieqlUFhIqBjCcMugGTsE+xfWIOct22RDEUI3cAboCew5ppjOREAxzbaH8LaUBct5eLN8wtakY3Vv8KxBoT3Hq6fnNSSGOKmkqMVrK0p",
+    "keysetInfo":
+        {
+            "primaryKeyId": 593699223,
+            "keyInfo":
+                [
+                    {
+                        "typeUrl": "type.googleapis.com/ssb.crypto.tink.FpeFfxKey",
+                        "status": "ENABLED",
+                        "keyId": 593699223,
+                        "outputPrefixType": "RAW"
+                    }
+                ]
+        }
+}
+
+# Extract the kek uri from the keyset json
+kek_uri = keyset_json.pop('kekUri')
+
+# Unwrap key using Google Cloud KMS
+kms_client = gcpkms.GcpKmsClient(kek_uri, gcp_credentials)
+kms_aead = kms_client.get_aead(kek_uri)
+keyset_handle = read_keyset_handle(keyset_reader=JsonKeysetReader(json.dumps(keyset_json)),
+                                   master_key_aead=kms_aead)
+
+# Get the FPE primitive
+fpe = keyset_handle.primitive(tink_fpe.Fpe)
+```
+
+### Dockerfile
+
+As of this writing (27.03.2023), Tink does not yet provide Python wheels for versions `>1.6.x`.
+Thus, in order to use Tink FPE, we need to build Tink, which involves using bazel and and
+compiling protobuf sources. The following shows a Dockerfile that demonstrates how this can
+be done. Notice that this is for the `x86` architecture. If you are on another
+architecture (e.g. `arm`), you need to substitute the bazel and protobuf references to match
+your system architecture.
+
+```dockerfile
+FROM python:3.10-bullseye
+
+RUN apt-get update && apt-get upgrade -y
+
+# Install curl and git
+RUN apt-get install -y curl git
+
+# Install bazel
+RUN curl -L https://github.com/bazelbuild/bazelisk/releases/download/v1.16.0/bazelisk-linux-amd64 > /usr/local/bin/bazelisk && chmod +x /usr/local/bin/bazelisk
+
+# Install latest protobuf compiler (note: protobuf-compiler from apt is an older non-compliant version)
+WORKDIR /opt/protobuf
+RUN curl -L https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protoc-21.12-linux-x86_64.zip > protoc.zip
+RUN unzip protoc.zip && chmod +x ./bin/protoc
+RUN ln -s /opt/protobuf/bin/protoc /usr/local/bin/protoc
+
+# Update pip
+RUN pip install --upgrade pip
+
+# ...
+WORKDIR /app
+```
+
 ## Known issues
 
 // TODO: Describe issue about chunking that results in up to last 3 characters not being encrypted.
+// TODO: Describe issue with minimum length depending on the alphabet radix (e.g. 4 characters for alphanumeric and 6 for digits)
 
 ## Contributing
 

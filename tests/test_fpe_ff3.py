@@ -171,23 +171,23 @@ def test_create_new_key_material(register_tink_fpe: None) -> None:
 
 def test_encrypt_decrypt_with_different_string_encoding(ff31_256_alphanumeric: Fpe) -> None:
     fpe = ff31_256_alphanumeric
-    plaintextStr = "Lörem ïpsum dôlor sit ämêt."
-    paramsUtf8 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="utf-8")
-    paramsLatin1 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="iso-8859-1")
+    plaintext_str = "Lörem ïpsum dôlor sit ämêt."
+    params_utf8 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="utf-8")
+    params_latin1 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="iso-8859-1")
 
-    utf8PlaintextBytes = plaintextStr.encode("utf-8")
-    utf8CiphertextBytes = fpe.encrypt(utf8PlaintextBytes, paramsUtf8)
-    utf8PlaintextRestoredBytes = fpe.decrypt(utf8CiphertextBytes, paramsUtf8)
-    assert utf8PlaintextRestoredBytes == utf8PlaintextBytes
+    utf8_plaintext_bytes = plaintext_str.encode("utf-8")
+    utf8_ciphertext_bytes = fpe.encrypt(utf8_plaintext_bytes, params_utf8)
+    utf8_plaintext_restored_bytes = fpe.decrypt(utf8_ciphertext_bytes, params_utf8)
+    assert utf8_plaintext_restored_bytes == utf8_plaintext_bytes
 
-    latin1PlaintextBytes = plaintextStr.encode("iso-8859-1")
-    latin1CiphertextBytes = fpe.encrypt(latin1PlaintextBytes, paramsLatin1)
-    latin1PlaintextRestoredBytes = fpe.decrypt(latin1CiphertextBytes, paramsLatin1)
-    assert latin1PlaintextRestoredBytes == latin1PlaintextBytes
+    latin1_plaintext_bytes = plaintext_str.encode("iso-8859-1")
+    latin1_ciphertext_bytes = fpe.encrypt(latin1_plaintext_bytes, params_latin1)
+    latin1_plaintext_restored_bytes = fpe.decrypt(latin1_ciphertext_bytes, params_latin1)
+    assert latin1_plaintext_restored_bytes == latin1_plaintext_bytes
 
     # Ciphertexts will be different if using different encodings
-    assert utf8CiphertextBytes != latin1CiphertextBytes
+    assert utf8_ciphertext_bytes != latin1_ciphertext_bytes
 
     # Ensure the original and restored plaintexts match, regardless of the encoding used.
-    assert plaintextStr == utf8PlaintextRestoredBytes.decode("utf-8")
-    assert plaintextStr == latin1PlaintextRestoredBytes.decode("iso-8859-1")
+    assert plaintext_str == utf8_plaintext_restored_bytes.decode("utf-8")
+    assert plaintext_str == latin1_plaintext_restored_bytes.decode("iso-8859-1")

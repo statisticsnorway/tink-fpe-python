@@ -63,7 +63,7 @@ class FpeFf3(Fpe):
         :param params: options that adjust how encryption will be performed
         :return: resulting ciphertext
         """
-        pt: str = plaintext.decode("utf-8")
+        pt: str = plaintext.decode(params.charset)
         tweak: str = _hex_tweak_of(params.tweak)
         char_skipper = None
 
@@ -94,7 +94,7 @@ class FpeFf3(Fpe):
         if char_skipper and char_skipper.has_skipped():
             ciphertext = char_skipper.inject_skipped_into(ciphertext)
 
-        return ciphertext.encode("utf-8")
+        return ciphertext.encode(params.charset)
 
     def decrypt(self, ciphertext: bytes, params: FpeParams = _DEFAULT_FPE_PARAMS) -> bytes:
         """Deterministically decrypt ciphertext using FF3-1 mode.
@@ -104,7 +104,7 @@ class FpeFf3(Fpe):
                        params used to encrypt.
         :return: resulting plaintext
         """
-        ct: str = ciphertext.decode("utf-8")
+        ct: str = ciphertext.decode(params.charset)
         tweak: str = _hex_tweak_of(params.tweak)
         char_skipper = None
 
@@ -124,4 +124,4 @@ class FpeFf3(Fpe):
         if char_skipper and char_skipper.has_skipped():
             plaintext = char_skipper.inject_skipped_into(plaintext)
 
-        return plaintext.encode("utf-8")
+        return plaintext.encode(params.charset)

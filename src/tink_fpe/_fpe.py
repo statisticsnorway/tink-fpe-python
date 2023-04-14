@@ -32,8 +32,8 @@ class UnknownCharacterStrategy(Enum):
 class CharacterGroup:
     """CharacterGroup holds different types of character groups, suitable for composing FPE alphabets."""
 
-    ALPHANUMERIC = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-    """Default alphanumeric characters: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"""
+    ALPHANUMERIC = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    """Default alphanumeric characters: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"""
 
     """Numeric characters: 0123456789"""
     DIGITS = "0123456789"
@@ -50,10 +50,12 @@ class FpeParams:
         strategy: UnknownCharacterStrategy = UnknownCharacterStrategy.FAIL,
         tweak: bytes = b"",
         redaction_char: str = "",
+        charset: str = "utf-8",
     ):
         self.unknown_character_strategy = strategy
         self.tweak = tweak
         self.redaction_char = redaction_char
+        self.charset = charset
 
 
 _DEFAULT_FPE_PARAMS = FpeParams()

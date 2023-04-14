@@ -3,7 +3,7 @@
 One can use these templates to generate a new tink_pb2.Keyset with
 tink_pb2.KeysetHandle. To generate a new keyset that contains a single
 fpe_ffx_pb2.FpeFfxKey, one can do:
-handle = keyset_handle.KeysetHandle(fpe_key_templates.FPE_FF31_256_F_ALPHANUMERIC).
+handle = keyset_handle.KeysetHandle(fpe_key_templates.FPE_FF31_256_ALPHANUMERIC).
 """
 
 from tink.proto import tink_pb2

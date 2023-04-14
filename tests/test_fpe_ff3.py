@@ -21,9 +21,9 @@ def register_tink_fpe() -> None:
 @pytest.fixture(scope="class")
 def static_keysets() -> t.Dict[str, str]:
     return {
-        "FPE_FF31_256_ALPHANUMERIC": '{"primaryKeyId":1720617146,"key":[{"keyData":{"typeUrl":"type.googleapis.com/ssb.crypto.tink.FpeFfxKey","value":"EiBoBeUFkoew7YJObcgcz1uOmzdhJFkPP7driAxAuS0UiRpCEAIaPkFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMTIzNDU2Nzg5","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":1720617146,"outputPrefixType":"RAW"}]}',
-        "FPE_FF31_192_ALPHANUMERIC": '{"primaryKeyId":1928982491,"key":[{"keyData":{"typeUrl":"type.googleapis.com/ssb.crypto.tink.FpeFfxKey","value":"EhizrnA3ckTddEhK3xWtrTMe6MEGpDFGXIUaQhACGj5BQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWmFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6MDEyMzQ1Njc4OQ==","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":1928982491,"outputPrefixType":"RAW"}]}',
-        "FPE_FF31_128_ALPHANUMERIC": '{"primaryKeyId":1382079328,"key":[{"keyData":{"typeUrl":"type.googleapis.com/ssb.crypto.tink.FpeFfxKey","value":"EhD4978shQNRpBNaBjbF4KO4GkIQAho+QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NTY3ODk=","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":1382079328,"outputPrefixType":"RAW"}]}',
+        "FPE_FF31_256_ALPHANUMERIC": '{"primaryKeyId":832997605,"key":[{"keyData":{"typeUrl":"type.googleapis.com/ssb.crypto.tink.FpeFfxKey","value":"EiCCNkK81HHmUY4IjEzXDrGLOT5t+7PGQ1eIyrGqGa4S3BpCEAIaPjAxMjM0NTY3ODlBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWmFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":832997605,"outputPrefixType":"RAW"}]}',
+        "FPE_FF31_192_ALPHANUMERIC": '{"primaryKeyId":1472396213,"key":[{"keyData":{"typeUrl":"type.googleapis.com/ssb.crypto.tink.FpeFfxKey","value":"EhjK5UIa3TqJKbcdrnLeGt/9qppevXZJgQ8aQhACGj4wMTIzNDU2Nzg5QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5eg==","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":1472396213,"outputPrefixType":"RAW"}]}',
+        "FPE_FF31_128_ALPHANUMERIC": '{"primaryKeyId":1285197635,"key":[{"keyData":{"typeUrl":"type.googleapis.com/ssb.crypto.tink.FpeFfxKey","value":"EhBiuZBtjIqW+UdSRoGclarMGkIQAho+MDEyMzQ1Njc4OUFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=","keyMaterialType":"SYMMETRIC"},"status":"ENABLED","keyId":1285197635,"outputPrefixType":"RAW"}]}',
     }
 
 
@@ -48,19 +48,19 @@ def ff31_128_alphanumeric(register_tink_fpe: None, static_keysets: t.Dict[str, s
 @pytest.mark.parametrize(
     "plaintext, expected_ciphertext",
     [
-        ("Foobar", "6jZemW"),
-        ("Foo bar", "6jZ emW"),
+        ("Foobar", "b7kOqd"),
+        ("Foo bar", "b7k Oqd"),
         (
             "If I could gather all the stars and hold them in my hand",
-            "Tw 8 Vqp9k FVfYSv DqJ eSe 5nL68 BA8 SkV8 vhX4 Dc SP XImS",
+            "sr D Gm8se ic4Wid mTd Scz FpVR9 gdn 5dcW 5PCh xD 6C 9GFk",
         ),
         ("A", "A"),
         ("123", "123"),
-        ("abcd", "QCeY"),
-        ("ab cd", "QC eY"),
+        ("abcd", "NcFL"),
+        ("ab cd", "Nc FL"),
         ("abc#", "abc#"),
-        ("012345678901234567890123456789AB", "ULxO2Z2FeOfIpESyrRCBIj2bABCu4sAB"),
-        ("012345678901234567890123456789#", "ULxO2Z2FeOfIpESyrRCBIj2bABCu4s#"),
+        ("012345678901234567890123456789AB", "3wOIPgonKck22IVcL19ti42uFmKM8mAB"),
+        ("012345678901234567890123456789#", "3wOIPgonKck22IVcL19ti42uFmKM8m#"),
     ],
 )
 def test_ff31_encrypt_decrypt_alphanumeric_with_skip(
@@ -77,20 +77,20 @@ def test_ff31_encrypt_decrypt_alphanumeric_with_skip(
 @pytest.mark.parametrize(
     "plaintext, expected_ciphertext, expected_plaintext",
     [
-        ("Foobar", "6jZemW", "Foobar"),
-        ("Foo bar", "qFejvAC", "FooXbar"),
+        ("Foobar", "b7kOqd", "Foobar"),
+        ("Foo bar", "EXoaFHU", "FooXbar"),
         (
             "If I could gather all the stars and hold them in my hand",
-            "qslVtH0Zu2Gcy3I89NeWRwGShILxssNPGM7LABI8wxLcY23UGevd2NaV",
+            "t75QqfsrW4ilmkoZzDnBpeyj2il6445WMw63II8UB8kBD5PQESgVng7e",
             "IfXIXcouldXgatherXallXtheXstarsXandXholdXthemXinXmyXhand",
         ),
         ("A", "A", "A"),
         ("123", "123", "123"),
-        ("abcd", "QCeY", "abcd"),
-        ("ab cd", "KtxVK", "abXcd"),
-        ("abc#", "SuU6", "abcX"),
-        ("012345678901234567890123456789AB", "ULxO2Z2FeOfIpESyrRCBIj2bABCu4sAB", "012345678901234567890123456789AB"),
-        ("012345678901234567890123456789#", "ULxO2Z2FeOfIpESyrRCBIj2bABCu4sX", "012345678901234567890123456789X"),
+        ("abcd", "NcFL", "abcd"),
+        ("ab cd", "kADJO", "abXcd"),
+        ("abc#", "tHSF", "abcX"),
+        ("012345678901234567890123456789AB", "3wOIPgonKck22IVcL19ti42uFmKM8mAB", "012345678901234567890123456789AB"),
+        ("012345678901234567890123456789#", "3wOIPgonKck22IVcL19ti42uFmKM8mX", "012345678901234567890123456789X"),
     ],
 )
 def test_ff31_encrypt_decrypt_alphanumeric_with_redact(
@@ -107,20 +107,20 @@ def test_ff31_encrypt_decrypt_alphanumeric_with_redact(
 @pytest.mark.parametrize(
     "plaintext, expected_ciphertext, expected_plaintext",
     [
-        ("Foobar", "6jZemW", "Foobar"),
-        ("Foo bar", "6jZemW", "Foobar"),
+        ("Foobar", "b7kOqd", "Foobar"),
+        ("Foo bar", "b7kOqd", "Foobar"),
         (
             "If I could gather all the stars and hold them in my hand",
-            "Tw8Vqp9kFVfYSvDqJeSe5nL68BA8SkV8vhX4DcSPXImS",
+            "srDGm8seic4WidmTdSczFpVR9gdn5dcW5PChxD6C9GFk",
             "IfIcouldgatherallthestarsandholdtheminmyhand",
         ),
         ("A", "A", "A"),
         ("123", "123", "123"),
-        ("abcd", "QCeY", "abcd"),
-        ("ab cd", "QCeY", "abcd"),
+        ("abcd", "NcFL", "abcd"),
+        ("ab cd", "NcFL", "abcd"),
         ("abc#", "abc", "abc"),
-        ("012345678901234567890123456789AB", "ULxO2Z2FeOfIpESyrRCBIj2bABCu4sAB", "012345678901234567890123456789AB"),
-        ("012345678901234567890123456789#", "ULxO2Z2FeOfIpESyrRCBIj2bABCu4s", "012345678901234567890123456789"),
+        ("012345678901234567890123456789AB", "3wOIPgonKck22IVcL19ti42uFmKM8mAB", "012345678901234567890123456789AB"),
+        ("012345678901234567890123456789#", "3wOIPgonKck22IVcL19ti42uFmKM8m", "012345678901234567890123456789"),
     ],
 )
 def test_ff31_encrypt_decrypt_alphanumeric_with_delete(
@@ -167,3 +167,27 @@ def test_create_new_key_material(register_tink_fpe: None) -> None:
         tink_fpe.fpe_key_templates.FPE_FF31_128_ALPHANUMERIC,
     ):
         tink.new_keyset_handle(key_template)
+
+
+def test_encrypt_decrypt_with_different_string_encoding(ff31_256_alphanumeric: Fpe) -> None:
+    fpe = ff31_256_alphanumeric
+    plaintext_str = "Lörem ïpsum dôlor sit ämêt."
+    params_utf8 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="utf-8")
+    params_latin1 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="iso-8859-1")
+
+    utf8_plaintext_bytes = plaintext_str.encode("utf-8")
+    utf8_ciphertext_bytes = fpe.encrypt(utf8_plaintext_bytes, params_utf8)
+    utf8_plaintext_restored_bytes = fpe.decrypt(utf8_ciphertext_bytes, params_utf8)
+    assert utf8_plaintext_restored_bytes == utf8_plaintext_bytes
+
+    latin1_plaintext_bytes = plaintext_str.encode("iso-8859-1")
+    latin1_ciphertext_bytes = fpe.encrypt(latin1_plaintext_bytes, params_latin1)
+    latin1_plaintext_restored_bytes = fpe.decrypt(latin1_ciphertext_bytes, params_latin1)
+    assert latin1_plaintext_restored_bytes == latin1_plaintext_bytes
+
+    # Ciphertexts will be different if using different encodings
+    assert utf8_ciphertext_bytes != latin1_ciphertext_bytes
+
+    # Ensure the original and restored plaintexts match, regardless of the encoding used.
+    assert plaintext_str == utf8_plaintext_restored_bytes.decode("utf-8")
+    assert plaintext_str == latin1_plaintext_restored_bytes.decode("iso-8859-1")

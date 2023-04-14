@@ -50,10 +50,12 @@ class FpeParams:
         strategy: UnknownCharacterStrategy = UnknownCharacterStrategy.FAIL,
         tweak: bytes = b"",
         redaction_char: str = "",
+        charset: str = "utf-8",
     ):
         self.unknown_character_strategy = strategy
         self.tweak = tweak
         self.redaction_char = redaction_char
+        self.charset = charset
 
 
 _DEFAULT_FPE_PARAMS = FpeParams()

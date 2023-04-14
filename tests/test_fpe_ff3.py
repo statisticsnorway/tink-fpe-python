@@ -167,3 +167,27 @@ def test_create_new_key_material(register_tink_fpe: None) -> None:
         tink_fpe.fpe_key_templates.FPE_FF31_128_ALPHANUMERIC,
     ):
         tink.new_keyset_handle(key_template)
+
+
+def test_encrypt_decrypt_with_different_string_encoding(ff31_256_alphanumeric: Fpe) -> None:
+    fpe = ff31_256_alphanumeric
+    plaintextStr = "Lörem ïpsum dôlor sit ämêt."
+    paramsUtf8 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="utf-8")
+    paramsLatin1 = FpeParams(strategy=UnknownCharacterStrategy.SKIP, charset="iso-8859-1")
+
+    utf8PlaintextBytes = plaintextStr.encode("utf-8")
+    utf8CiphertextBytes = fpe.encrypt(utf8PlaintextBytes, paramsUtf8)
+    utf8PlaintextRestoredBytes = fpe.decrypt(utf8CiphertextBytes, paramsUtf8)
+    assert utf8PlaintextRestoredBytes == utf8PlaintextBytes
+
+    latin1PlaintextBytes = plaintextStr.encode("iso-8859-1")
+    latin1CiphertextBytes = fpe.encrypt(latin1PlaintextBytes, paramsLatin1)
+    latin1PlaintextRestoredBytes = fpe.decrypt(latin1CiphertextBytes, paramsLatin1)
+    assert latin1PlaintextRestoredBytes == latin1PlaintextBytes
+
+    # Ciphertexts will be different if using different encodings
+    assert utf8CiphertextBytes != latin1CiphertextBytes
+
+    # Ensure the original and restored plaintexts match, regardless of the encoding used.
+    assert plaintextStr == utf8PlaintextRestoredBytes.decode("utf-8")
+    assert plaintextStr == latin1PlaintextRestoredBytes.decode("iso-8859-1")

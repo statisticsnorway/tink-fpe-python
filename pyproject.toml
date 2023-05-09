@@ -19,6 +19,7 @@ Changelog = "https://github.com/statisticsnorway/tink-fpe-python/releases"
 python = "^3.7"
 ff3 = "^1.0.1"
 types-protobuf = "^3.20.1"
+tink = "^1.7.0"
 
 
 [tool.poetry.scripts]

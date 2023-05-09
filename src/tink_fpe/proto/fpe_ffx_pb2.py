@@ -62,7 +62,6 @@ FpeFfxKey = _reflection.GeneratedProtocolMessageType(
 _sym_db.RegisterMessage(FpeFfxKey)
 
 if _descriptor._USE_C_DESCRIPTORS == False:
-
     DESCRIPTOR._options = None
     DESCRIPTOR._serialized_options = b"\n\030no.ssb.crypto.tink.protoP\001"
     _FFXMODE._serialized_start = 338

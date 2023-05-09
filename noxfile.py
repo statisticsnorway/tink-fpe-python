@@ -134,10 +134,14 @@ def precommit(session: Session) -> None:
 
 @session(python=python_versions[0])
 def safety(session: Session) -> None:
-    """Scan dependencies for insecure packages."""
+    """Scan dependencies for insecure packages.
+
+    Warning: We are explicitly ignoring vulnerability 51167 due to tink 1.7.0 requiring protobuf 3.20.1.
+    This must be removed if we upgrade to tink > 1.7.0 (whenever a new release becomes available).
+    """
     requirements = session.poetry.export_requirements()
     session.install("safety")
-    session.run("safety", "check", "--full-report", f"--file={requirements}")
+    session.run("safety", "check", "--full-report", "--ignore", "51167", f"--file={requirements}")
 
 
 @session(python=python_versions)

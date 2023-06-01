@@ -32,7 +32,7 @@ jobs:
           poetry --version
 
       - name: Install Protoc
-        uses: arduino/setup-protoc@v1.1.2
+        uses: arduino/setup-protoc@v2.0.0
 
       - name: Check if there is a parent commit
         id: check-parent-commit

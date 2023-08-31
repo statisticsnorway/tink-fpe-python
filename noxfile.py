@@ -22,7 +22,7 @@ except ImportError:
 
 
 package = "tink_fpe"
-python_versions = ["3.10", "3.9", "3.8"]
+python_versions = ["3.11", "3.10", "3.9", "3.8"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
@@ -149,7 +149,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["src", "tests"]
     session.install(".")
-    session.install("mypy", "pytest")
+    session.install("mypy", "pytest", "types-protobuf")
     session.run("mypy", *args)
     if not session.posargs:
         session.run("mypy", f"--python-executable={sys.executable}", "noxfile.py")

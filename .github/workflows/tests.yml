@@ -67,7 +67,7 @@ jobs:
           nox --version
 
       - name: Install Protoc
-        uses: arduino/setup-protoc@v1.1.2
+        uses: arduino/setup-protoc@v2.1.0
 
       - name: Compute pre-commit cache key
         if: matrix.session == 'pre-commit'

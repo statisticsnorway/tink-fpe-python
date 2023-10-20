@@ -45,9 +45,9 @@ pyupgrade = ">=2.29.1"
 safety = ">=1.10.3"
 typeguard = ">=2.13.3"
 xdoctest = { extras = ["colors"], version = ">=0.15.10" }
-deptry = "^0.12.0"
-nox = "^2023.4.22"
-nox-poetry = "^1.0.3"
+deptry = ">=0.12.0"
+nox = ">=2023.4.22"
+nox-poetry = ">=1.0.3"
 types-protobuf = ">=3.20.1"
 
 [tool.coverage.paths]
